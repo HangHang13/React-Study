@@ -483,3 +483,123 @@ export default ExpensItem;
 
 ```
 
+
+
+### JSX 에서 동적 데이터 출력 및 표현식 작업하기
+
+```react
+//ExpenseItem.js
+
+import './ExpenseItem.css';
+
+
+const date = new Date();
+const expenseItem = 'Car Insurance';
+const expenseAmount = 294.7; 
+
+function ExpensItem() {
+  return (
+    <div className='expense-item'>
+      <div >{date.toISOString()}</div>
+      <div className='expense-item__descripton'>
+        <h2>{expenseItem}</h2>
+        <p>{Math.random()}</p>
+        <div className='expense-item__price'>${expenseAmount}</div>
+      </div>
+    </div>
+  );
+}
+
+export default ExpensItem;
+
+```
+
+- `{ }` 을 사용해서 동적 방식으로 데이터 출력 가능
+
+
+
+### props를 통해 데이터 전달하기
+
+```react
+//Apps.js
+
+import ExpensItem from "./components/ExpenseItem";
+
+function App() {
+  const expenses = [
+    {
+      id: "e1",
+      title: "Toilet Paper",
+      amount: 94.12,
+      date: new Date(2020, 7, 14),
+    },
+    { id: "e2", title: "New TV", amount: 799.49, date: new Date(2021, 2, 12) },
+    {
+      id: "e3",
+      title: "Car Insurance",
+      amount: 294.67,
+      date: new Date(2021, 2, 28),
+    },
+    {
+      id: "e4",
+      title: "New Desk (Wooden)",
+      amount: 450,
+      date: new Date(2021, 5, 12),
+    },
+  ];
+  return (
+    <div>
+      <ExpensItem
+        title={expenses[0].title}
+        amount={expenses[0].amount}
+        date={expenses[0].date}
+      ></ExpensItem>
+      <ExpensItem
+        title={expenses[1].title}
+        amount={expenses[1].amount}
+        date={expenses[1].date}
+      ></ExpensItem>
+      <ExpensItem
+        title={expenses[2].title}
+        amount={expenses[2].amount}
+        date={expenses[2].date}
+      ></ExpensItem>
+      <ExpensItem
+        title={expenses[3].title}
+        amount={expenses[3].amount}
+        date={expenses[3].date}
+      ></ExpensItem>
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+```react
+//ExpenseItem.js
+
+import './ExpenseItem.css';
+
+
+function ExpensItem(props) {
+  return (
+    <div className='expense-item'>
+      <div >{props.date.toISOString()}</div>
+      <div className='expense-item__descripton'>
+        <h2>{props.title}</h2>
+        <div className='expense-item__price'>${props.amount}</div>
+      </div>
+    </div>
+  );
+}
+
+export default ExpensItem;
+
+```
+
+- 매개변수 props 하나만을 받아서 사용
+  - props.title, props.amount 등
+- Apps.js 에서 데이터는 배열로 줌
+- props는 재사용가능하게 해주고, 데이터를 props 끼리 이동시킬 수 있음
